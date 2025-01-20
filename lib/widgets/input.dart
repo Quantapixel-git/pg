@@ -8,6 +8,8 @@ class Input extends StatelessWidget {
   final bool enabled;
   final VoidCallback? onTap;
   final bool showLabel;
+  final TextInputType keyboardType;
+  final bool isSecureEntry;
 
   const Input({
     super.key,
@@ -17,6 +19,8 @@ class Input extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.showLabel = true,
+    this.keyboardType = TextInputType.text,
+    this.isSecureEntry = false,
   });
 
   @override
@@ -39,6 +43,9 @@ class Input extends StatelessWidget {
             height: 4.0,
           ),
         TextField(
+          obscureText: isSecureEntry,
+          onTap: onTap,
+          keyboardType: keyboardType,
           enabled: enabled,
           readOnly: readOnly,
           controller: controller,

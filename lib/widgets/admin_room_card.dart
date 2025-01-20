@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pg/core/theme/app_colors.dart';
+import 'package:pg/models/room_model.dart';
 
 class AdminRoomCard extends StatelessWidget {
-  final String pgName;
-  final String floorName;
-  final String roomName;
+  final RoomModel room;
 
-  final VoidCallback? onDeleteTap;
-  final VoidCallback? onEditTap;
+  final Function(String? roomId) onDeleteTap;
+  final Function(RoomModel room) onEditTap;
 
   const AdminRoomCard({
     super.key,
-    required this.roomName,
-    required this.pgName,
-    required this.floorName,
-    this.onDeleteTap,
-    this.onEditTap,
+    required this.room,
+    required this.onDeleteTap,
+    required this.onEditTap,
   });
 
   @override
@@ -43,21 +40,37 @@ class AdminRoomCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Room: $floorName",
+                  "Room: ${room.name}",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "Floor: $floorName",
+                  "Floor: ${room.floorName}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "PG: $pgName",
+                  "PG: ${room.pgName}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.gray,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  "Sharing: ${room.sharing}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.gray,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  "Price: Rs ${room.price} ",
                   style: TextStyle(
                     fontSize: 16,
                     color: AppColors.gray,
@@ -70,14 +83,18 @@ class AdminRoomCard extends StatelessWidget {
           Wrap(
             children: [
               IconButton(
-                onPressed: onDeleteTap,
+                onPressed: () {
+                  onDeleteTap(room.id);
+                },
                 icon: Icon(
                   Icons.delete,
                   color: AppColors.danger,
                 ),
               ),
               IconButton(
-                onPressed: onEditTap,
+                onPressed: () {
+                  onEditTap(room);
+                },
                 icon: Icon(Icons.edit),
               ),
             ],

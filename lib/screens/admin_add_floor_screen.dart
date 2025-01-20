@@ -9,7 +9,7 @@ import 'package:pg/widgets/input.dart';
 import 'package:pg/widgets/loader.dart';
 
 class AdminAddFloorScreen extends StatefulWidget {
-  AdminAddFloorScreen({super.key});
+  const AdminAddFloorScreen({super.key});
 
   @override
   State<AdminAddFloorScreen> createState() => _AdminAddFloorScreenState();

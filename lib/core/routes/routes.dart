@@ -1,17 +1,24 @@
 import 'package:get/get.dart';
 import 'package:pg/core/routes/route_name.dart';
+import 'package:pg/screens/admin_add_banner_screen.dart';
 import 'package:pg/screens/admin_add_floor_screen.dart';
 import 'package:pg/screens/admin_add_pg_screen.dart';
 import 'package:pg/screens/admin_add_room_screen.dart';
+import 'package:pg/screens/admin_add_sub_admin_screen.dart';
 import 'package:pg/screens/admin_add_user_screen.dart';
+import 'package:pg/screens/admin_banner_list_screen.dart';
+import 'package:pg/screens/admin_booking_list_screen.dart';
+import 'package:pg/screens/admin_edit_banner_screen.dart';
 import 'package:pg/screens/admin_edit_floor_screen.dart';
 import 'package:pg/screens/admin_edit_pg_screen.dart';
 import 'package:pg/screens/admin_edit_room_screen.dart';
+import 'package:pg/screens/admin_edit_sub_admin_screen.dart';
 import 'package:pg/screens/admin_edit_user_screen.dart';
 import 'package:pg/screens/admin_floor_list_screen.dart';
 import 'package:pg/screens/admin_home_screen.dart';
 import 'package:pg/screens/admin_pg_list_screen.dart';
 import 'package:pg/screens/admin_room_list_screen.dart';
+import 'package:pg/screens/admin_subadmin_list_screen.dart';
 import 'package:pg/screens/admin_users_list_screen.dart';
 import 'package:pg/screens/book_room_screen.dart';
 import 'package:pg/screens/home_screen.dart';
@@ -87,6 +94,34 @@ class Routes {
     GetPage(
       name: RouteName.adminRoomList,
       page: () => AdminRoomListScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminBannerList,
+      page: () => AdminBannerListScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminAddBanner,
+      page: () => AdminAddBannerScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminSubAdminList,
+      page: () => AdminSubadminListScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminAddSubAdmin,
+      page: () => AdminAddSubAdminScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminUpdateSubAdmin,
+      page: () => AdminEditSubAdminScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminBookingList,
+      page: () => AdminBookingListScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminUpdateBanner,
+      page: () => AdminEditBannerScreen(),
     ),
   ];
 }

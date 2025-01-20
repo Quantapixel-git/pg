@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:pg/controllers/banner_controller.dart';
+import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
 import 'package:pg/core/routes/routes.dart';
 import 'package:pg/core/theme/theme.dart';
@@ -14,9 +16,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: BindingsBuilder(
+        () {
+          Get.put(BannerController());
+          Get.put(PgController());
+        },
+      ),
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: RouteName.home,
+      initialRoute: RouteName.userLayout,
       getPages: Routes.pages,
     );
   }

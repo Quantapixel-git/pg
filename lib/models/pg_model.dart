@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 
 class PGModel {
-  final int? id;
+  final String? id;
   final String imageUrl;
   final String name;
   final String address;
@@ -20,7 +20,7 @@ class PGModel {
   factory PGModel.fromJson(Map<String, dynamic> json) {
     print(json);
     return PGModel(
-      id: json['id'],
+      id: (json['id'] as int).toString(),
       imageUrl: json['image_url'],
       name: json['name'],
       address: json['address'],

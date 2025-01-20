@@ -22,8 +22,29 @@ class FloorServices {
     }
   }
 
+  static Future<Either<Failure, List<FloorModel>>> getAllFloorsByPGId({
+    required String pgId,
+  }) async {
+    try {
+      final data = await Request.post(
+        url: ApiEndpoints.getAllFloorsByPGId,
+        body: {"category_id": pgId},
+      );
+
+      final floorList = (data['data'] as List)
+          .map((floor) => FloorModel.fromJson(floor))
+          .toList();
+
+      return right(floorList);
+    } on ServerException catch (e) {
+      return left(Failure(title: "Error", message: e.message));
+    } catch (e) {
+      return left(Failure(title: "Error", message: "Something went wrong"));
+    }
+  }
+
   static Future<Either<Failure, void>> insertFloor({
-    required int pgId,
+    required String pgId,
     required String floorName,
   }) async {
     try {
@@ -41,12 +62,12 @@ class FloorServices {
   }
 
   static Future<Either<Failure, void>> deleteFloor({
-    required int floorId,
+    required String floorId,
   }) async {
     try {
       final data = await Request.post(
         url: ApiEndpoints.deleteFloor,
-        body: {"category_id": floorId},
+        body: {"subcategory_id": floorId},
       );
 
       return right(null);
@@ -57,9 +78,9 @@ class FloorServices {
     }
   }
 
-  static Future<Either<Failure, void>> editFloor({
-    required int pgId,
-    required int floorId,
+  static Future<Either<Failure, void>> updateFloor({
+    required String pgId,
+    required String floorId,
     required String floorName,
   }) async {
     try {

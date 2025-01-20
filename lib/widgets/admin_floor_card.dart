@@ -5,7 +5,7 @@ import 'package:pg/models/floor_model.dart';
 class AdminFloorCard extends StatelessWidget {
   final FloorModel floor;
 
-  final Function(int? floorId) onDeleteTap;
+  final Function(String? floorId) onDeleteTap;
   final Function(FloorModel floor) onEditTap;
 
   const AdminFloorCard({

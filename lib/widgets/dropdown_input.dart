@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:pg/core/theme/app_colors.dart';
-import 'package:pg/models/pg_model.dart';
 
 class DropdownInput extends StatelessWidget {
   final String label;
-  final List<PGModel> items;
-  final String? hintText;
+  final List items;
+  final String hintText;
   final Function(dynamic id)? onSelected;
 
   const DropdownInput({
     super.key,
     required this.label,
     required this.items,
-    this.hintText,
+    this.hintText = "Click to Select",
     this.onSelected,
   });
 

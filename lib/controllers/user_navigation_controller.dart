@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:pg/screens/settings_screen.dart';
+import 'package:pg/screens/admin_login_screen.dart';
 import 'package:pg/screens/user_home_screen.dart';
 
 class UserNavigationController extends GetxController {
@@ -7,7 +7,7 @@ class UserNavigationController extends GetxController {
 
   final pages = [
     UserHomeScreen(),
-    SettingsScreen(),
+    AdminLoginScreen(),
   ];
 
   void updateNavigationIndex(int index) {

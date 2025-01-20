@@ -29,12 +29,12 @@ class NavigationLayout extends StatelessWidget {
             ),
             NavigationDestination(
               icon: Icon(
-                Icons.settings_outlined,
+                Icons.login_outlined,
                 color: _navigationServices.currentIndex.value == 1
                     ? AppColors.white
                     : AppColors.gray,
               ),
-              label: "Settings",
+              label: "Login",
             ),
           ],
         ),

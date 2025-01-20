@@ -1,0 +1,4 @@
+deleteSubCategory (show sucessfully delete by subcategory not delete)
+getAllInnerSubCategories (always give empty data even after data successfully insert)
+getInnerSubCategoryById (404 not found)
+

@@ -16,6 +16,14 @@ class RouteName {
   static final String adminUsersList = "/admin/users/list";
   static final String adminAddUser = "/admin/users/add";
   static final String adminEditUser = "/admin/users/edit";
+  static final String adminBannerList = "/admin/banner/list";
+  static final String adminAddBanner = "/admin/banner/add";
+  static final String adminUpdateBanner = "/admin/banner/update";
+  static final String adminDeleteBanner = "/admin/banner/delete";
+  static final String adminSubAdminList = "/admin/subAdmin/list";
+  static final String adminAddSubAdmin = "/admin/subAdmin/add";
+  static final String adminUpdateSubAdmin = "/admin/subAdmin/update";
+  static final String adminBookingList = "/admin/bookings/list";
 
   // User Routes
   static final String userLayout = "/user/layout";

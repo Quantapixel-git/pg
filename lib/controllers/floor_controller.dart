@@ -8,20 +8,15 @@ import 'package:pg/services/floor_services.dart';
 class FloorController extends GetxController {
   // States
   final isLoading = false.obs;
-  final floorList = RxList<FloorModel>([]);
+  final floorList = <FloorModel>[].obs;
+  final dropdownFloorList = <FloorModel>[].obs;
   final isInserting = false.obs;
   final isUpdating = false.obs;
 
   // Input
-  int? selectedPGId;
+  String? selectedPGId;
+  String? selectedPGIdForSearch;
   final nameController = TextEditingController();
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    getAllFloors();
-    super.onReady();
-  }
 
   void getAllFloors() async {
     isLoading.value = true;
@@ -36,6 +31,56 @@ class FloorController extends GetxController {
       },
       (floorData) {
         floorList.addAll(floorData);
+      },
+    );
+    isLoading.value = false;
+  }
+
+  void getAllFloorsByPGId() async {
+    if (selectedPGIdForSearch == null) {
+      AppUtils.showSnackBar(title: "Error", message: "Please seleect PG first");
+      return;
+    }
+
+    isLoading.value = true;
+
+    floorList.clear();
+
+    final res = await FloorServices.getAllFloorsByPGId(
+      pgId: selectedPGIdForSearch!,
+    );
+
+    res.fold(
+      (failure) {
+        AppUtils.showSnackBar(title: failure.title, message: failure.message);
+      },
+      (floorData) {
+        floorList.addAll(floorData);
+        floorList.refresh();
+      },
+    );
+    isLoading.value = false;
+  }
+
+  void getALlFloorDropdownByPGId() async {
+    if (selectedPGIdForSearch == null) {
+      AppUtils.showSnackBar(title: "Error", message: "Please seleect PG first");
+      return;
+    }
+
+    isLoading.value = true;
+
+    dropdownFloorList.clear();
+
+    final res =
+        await FloorServices.getAllFloorsByPGId(pgId: selectedPGIdForSearch!);
+
+    res.fold(
+      (failure) {
+        AppUtils.showSnackBar(title: failure.title, message: failure.message);
+      },
+      (floorData) {
+        dropdownFloorList.addAll(floorData);
       },
     );
     isLoading.value = false;
@@ -68,7 +113,7 @@ class FloorController extends GetxController {
           backgroundColor: Colors.green,
         );
 
-        getAllFloors();
+        getAllFloorsByPGId();
 
         Get.until((route) => Get.currentRoute == RouteName.adminFloorList);
       },
@@ -76,7 +121,11 @@ class FloorController extends GetxController {
     isInserting.value = false;
   }
 
-  void editFloor(int floorId) async {
+  void editFloor(
+    String floorId,
+  ) async {
+    print("Edit Floor is calling .....");
+
     if (selectedPGId == null || nameController.text.isEmpty) {
       AppUtils.showSnackBar(
         title: "Validation Error",
@@ -88,7 +137,7 @@ class FloorController extends GetxController {
 
     isUpdating.value = true;
 
-    final res = await FloorServices.editFloor(
+    final res = await FloorServices.updateFloor(
       floorId: floorId,
       floorName: nameController.text.trim(),
       pgId: selectedPGId!,
@@ -102,17 +151,23 @@ class FloorController extends GetxController {
         AppUtils.showSnackBar(
           title: "Success",
           message: "Floor Successfully Updated",
+          backgroundColor: Colors.green,
         );
+
+        if (selectedPGIdForSearch != null) {
+          getALlFloorDropdownByPGId();
+        }
+        Get.until((route) => Get.currentRoute == RouteName.adminFloorList);
       },
     );
     isUpdating.value = false;
-    getAllFloors();
-    Get.until((route) => Get.currentRoute == RouteName.adminFloorList);
   }
 
   void deleteFloor({
-    required int? floorId,
+    required String? floorId,
   }) async {
+    print("Delete Floor is calling .....");
+
     if (floorId == null) {
       AppUtils.showSnackBar(
         title: "Error",
@@ -133,7 +188,7 @@ class FloorController extends GetxController {
           message: "Floor Successfully Delete",
         );
 
-        getAllFloors();
+        getAllFloorsByPGId();
       },
     );
   }

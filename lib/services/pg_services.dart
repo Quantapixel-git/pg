@@ -12,13 +12,10 @@ class PgServices {
   static Future<Either<Failure, List<PGModel>>> getAllPG() async {
     try {
       final data = await Request.get(url: ApiEndpoints.getAllPG);
-      print("Pg List Getting starting .........");
 
       final pgList =
           (data['data'] as List).map((pg) => PGModel.fromJson(pg)).toList();
 
-      print("Pg List Getting Success.....");
-      print(pgList);
       return right(pgList);
     } on ServerException catch (e) {
       return left(Failure(title: e.status, message: e.message));
@@ -85,7 +82,7 @@ class PgServices {
   }
 
   static Future<Either<Failure, void>> deletePG(
-    int categoryId,
+    String categoryId,
   ) async {
     try {
       await Request.post(

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pg/controllers/booking_controller.dart';
-import 'package:pg/controllers/home_controller.dart';
+import 'package:pg/controllers/user_booking_controller.dart';
 import 'package:pg/widgets/button.dart';
 import 'package:pg/widgets/input.dart';
 
-class BookRoomScreen extends StatelessWidget {
-  BookRoomScreen({super.key});
+class BookRoomScreen extends StatefulWidget {
+  const BookRoomScreen({super.key});
 
-  final _bookingController = Get.put(BookingController());
+  @override
+  State<BookRoomScreen> createState() => _BookRoomScreenState();
+}
+
+class _BookRoomScreenState extends State<BookRoomScreen> {
+  final _userBookingControoler = Get.find<UserBookingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +26,33 @@ class BookRoomScreen extends StatelessWidget {
           child: Column(
             children: [
               Input(
-                controller: _bookingController.pgController,
+                controller: TextEditingController(
+                  text: _userBookingControoler.selectedPGName,
+                ),
                 label: "PG Name",
                 readOnly: true,
                 enabled: false,
               ),
               Input(
-                controller: _bookingController.floorNoController,
+                controller: TextEditingController(
+                  text: _userBookingControoler.selectedFloorName,
+                ),
                 label: "Floor No",
                 readOnly: true,
                 enabled: false,
               ),
               Input(
-                controller: _bookingController.roomNoController,
+                controller: TextEditingController(
+                  text: _userBookingControoler.selectedRoomName,
+                ),
                 label: "Room No",
                 readOnly: true,
                 enabled: false,
               ),
               Input(
-                controller: _bookingController.noOfSharingController,
+                controller: TextEditingController(
+                  text: _userBookingControoler.selectedNoOfSharing.toString(),
+                ),
                 label: "No of Sharing",
                 readOnly: true,
                 enabled: false,
@@ -48,25 +60,28 @@ class BookRoomScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Input(label: "First Name"),
+                    child: Input(
+                      controller: _userBookingControoler.fNameController,
+                      label: "First Name",
+                    ),
                   ),
                   SizedBox(
                     width: 16,
                   ),
                   Expanded(
-                    child: Input(label: "Last Name "),
+                    child: Input(
+                        controller: _userBookingControoler.lNameController,
+                        label: "Last Name "),
                   ),
                 ],
               ),
               Input(
-                controller: _bookingController.phoneController,
+                controller: _userBookingControoler.phoneController,
                 label: "Phone Number",
-                readOnly: true,
               ),
               Input(
-                controller: _bookingController.addressController,
+                controller: _userBookingControoler.addressController,
                 label: "Address",
-                readOnly: true,
               ),
               SizedBox(
                 height: 16.0,
@@ -74,7 +89,9 @@ class BookRoomScreen extends StatelessWidget {
               Button(
                 hasFullWidth: true,
                 text: "Submit",
-                onTap: () {},
+                onTap: () {
+                  _userBookingControoler.bookPG();
+                },
               ),
               SizedBox(
                 height: 20,

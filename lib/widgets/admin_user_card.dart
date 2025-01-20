@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pg/core/theme/app_colors.dart';
+import 'package:pg/models/user_model.dart';
 
 class AdminUserCard extends StatelessWidget {
-  final String title;
-  final String pgName;
-  final int floorNumber;
-  final int roomNumber;
+  final UserModel user;
 
-  final VoidCallback? onDeleteTap;
-  final VoidCallback? onEditTap;
+  final Function(String? userId) onDeleteTap;
+  final Function(UserModel user) onEditTap;
 
   const AdminUserCard({
     super.key,
-    required this.title,
-    required this.pgName,
-    required this.floorNumber,
-    required this.roomNumber,
-    this.onDeleteTap,
-    this.onEditTap,
+    required this.user,
+    required this.onDeleteTap,
+    required this.onEditTap,
   });
 
   @override
@@ -46,28 +41,28 @@ class AdminUserCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  user.name,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "PG Name: $pgName",
+                  "PG Name: ${user.pgId}",
                   style: TextStyle(
                     fontSize: 17,
                     color: AppColors.gray,
                   ),
                 ),
                 Text(
-                  "Floor: $floorNumber",
+                  "Floor: ${user.floorId}",
                   style: TextStyle(
                     fontSize: 17,
                     color: AppColors.gray,
                   ),
                 ),
                 Text(
-                  "Room: $roomNumber",
+                  "Room: ${user.roomId}",
                   style: TextStyle(
                     fontSize: 17,
                     color: AppColors.gray,
@@ -79,14 +74,18 @@ class AdminUserCard extends StatelessWidget {
           Wrap(
             children: [
               IconButton(
-                onPressed: onDeleteTap,
+                onPressed: () {
+                  onDeleteTap(user.userId);
+                },
                 icon: Icon(
                   Icons.delete,
                   color: AppColors.danger,
                 ),
               ),
               IconButton(
-                onPressed: onEditTap,
+                onPressed: () {
+                  onEditTap(user);
+                },
                 icon: Icon(Icons.edit),
               ),
             ],

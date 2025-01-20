@@ -44,19 +44,15 @@ class Request {
         data: isFormData ? FormData.fromMap(body) : body,
       );
 
-      print("Response data is ......");
-      print(url);
-      print(res);
-
       return res.data;
     } on DioException catch (e) {
       print(e);
       print(e.response);
-
       throw ServerException(
         status: e.response?.data['status'] ?? "Error",
         statusCode: e.response?.statusCode ?? 500,
         message: e.response?.data['message'] ??
+            (e.response as Map?)?['message'] ??
             e.response?.data['msg'] ??
             "Something went wrong",
         data: e.response?.data,

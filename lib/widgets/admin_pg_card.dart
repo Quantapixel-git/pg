@@ -4,7 +4,7 @@ import 'package:pg/models/pg_model.dart';
 
 class AdminPGCard extends StatelessWidget {
   final PGModel pg;
-  final Function(int pgId) onDeleteTap;
+  final Function(String pgId) onDeleteTap;
   final Function(PGModel pg) onEditTap;
 
   const AdminPGCard({

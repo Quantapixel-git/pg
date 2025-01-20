@@ -4,14 +4,13 @@ import 'package:pg/controllers/floor_controller.dart';
 import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/core/theme/app_colors.dart';
 import 'package:pg/models/floor_model.dart';
-import 'package:pg/models/pg_model.dart';
 import 'package:pg/widgets/button.dart';
 import 'package:pg/widgets/dropdown_input.dart';
 import 'package:pg/widgets/input.dart';
 import 'package:pg/widgets/loader.dart';
 
 class AdminEditFloorScreen extends StatefulWidget {
-  AdminEditFloorScreen({super.key});
+  const AdminEditFloorScreen({super.key});
 
   @override
   State<AdminEditFloorScreen> createState() => _AdminEditFloorScreenState();
@@ -27,8 +26,10 @@ class _AdminEditFloorScreenState extends State<AdminEditFloorScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    _floorController.selectedPGId = currentFloorData.id;
-    _floorController.nameController.text = currentFloorData.name;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _floorController.selectedPGId = currentFloorData.id;
+      _floorController.nameController.text = currentFloorData.name;
+    });
     super.initState();
   }
 
@@ -58,7 +59,7 @@ class _AdminEditFloorScreenState extends State<AdminEditFloorScreen> {
                       children: [
                         DropdownInput(
                           label: "Select PG",
-                          hintText: currentFloorData.pgName,
+                          hintText: currentFloorData.pgName ?? "",
                           items: _pgController.pgList,
                           onSelected: (id) {
                             _floorController.selectedPGId = id;

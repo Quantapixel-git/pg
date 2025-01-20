@@ -8,11 +8,25 @@ import 'package:pg/widgets/admin_floor_card.dart';
 import 'package:pg/widgets/dropdown_input.dart';
 import 'package:pg/widgets/loader.dart';
 
-class AdminFloorListScreen extends StatelessWidget {
-  AdminFloorListScreen({super.key});
+class AdminFloorListScreen extends StatefulWidget {
+  const AdminFloorListScreen({super.key});
 
+  @override
+  State<AdminFloorListScreen> createState() => _AdminFloorListScreenState();
+}
+
+class _AdminFloorListScreenState extends State<AdminFloorListScreen> {
   final _pgController = Get.find<PgController>();
+
   final _floorController = Get.find<FloorController>();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _floorController.selectedPGIdForSearch = null;
+    _floorController.floorList.value.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +60,10 @@ class AdminFloorListScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       DropdownInput(
+                        onSelected: (id) {
+                          _floorController.selectedPGIdForSearch = id;
+                          _floorController.getAllFloorsByPGId();
+                        },
                         label: "Select PG",
                         items: _pgController.pgList,
                       ),

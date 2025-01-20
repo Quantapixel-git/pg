@@ -94,7 +94,7 @@ class PgController extends GetxController {
     isInserting.value = false;
   }
 
-  void updatePG(int pgId) async {
+  void updatePG(String pgId) async {
     isUpdating.value = true;
 
     final pg = PGModel(
@@ -126,7 +126,7 @@ class PgController extends GetxController {
     isUpdating.value = false;
   }
 
-  void deletePG({required int pgId}) async {
+  void deletePG({required String pgId}) async {
     isLoading.value = true;
 
     final res = await PgServices.deletePG(pgId);

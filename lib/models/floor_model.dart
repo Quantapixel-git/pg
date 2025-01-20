@@ -1,8 +1,8 @@
 class FloorModel {
-  final int? id;
-  final String categoryId;
+  final String? id;
+  final String? categoryId;
   final String name;
-  final String pgName;
+  final String? pgName;
 
   FloorModel({
     this.id,
@@ -12,9 +12,8 @@ class FloorModel {
   });
 
   factory FloorModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     return FloorModel(
-      id: int.parse(json['id']),
+      id: json['id'],
       categoryId: json['category_id'],
       name: json['name'],
       pgName: json['category_details']['name'],
