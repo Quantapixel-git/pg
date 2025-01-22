@@ -31,26 +31,6 @@ class _AdminFloorListScreenState extends State<AdminFloorListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        title: Text("Floors"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.toNamed(RouteName.adminAddFloor);
-            },
-            child: Text(
-              "Add",
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
       body: Obx(
         () => _floorController.isLoading.value
             ? const Loader()

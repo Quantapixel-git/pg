@@ -15,35 +15,6 @@ class AdminPgListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        title: Text("PG's"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.toNamed(RouteName.adminAddPG);
-            },
-            child: Text(
-              "Add",
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: Container(
-              padding: const EdgeInsets.all(16.0),
-              child: SearchInput(
-                onSumbited: (value) {},
-                hintText: "Search PG",
-              )),
-        ),
-      ),
       body: Obx(
         () => _pgController.isLoading.value
             ? const Loader()

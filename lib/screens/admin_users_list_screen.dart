@@ -18,26 +18,6 @@ class AdminUsersListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        title: Text("Users"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.toNamed(RouteName.adminAddUser);
-            },
-            child: Text(
-              "Add",
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(16.0),

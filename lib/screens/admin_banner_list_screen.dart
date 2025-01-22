@@ -13,26 +13,6 @@ class AdminBannerListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        title: Text("Banner's"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.toNamed(RouteName.adminAddBanner);
-            },
-            child: Text(
-              "Add",
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
       body: Obx(
         () => _bannerController.isLoading.value
             ? const Loader()

@@ -95,6 +95,7 @@ class UserHomeScreen extends StatelessWidget {
 
                               return PgCard(
                                 onTap: () {
+                                  print(pg.id);
                                   _userBookingController.updatePGState(
                                       pg.id, pg.name);
                                   _userBookingController

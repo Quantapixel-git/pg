@@ -13,11 +13,6 @@ class AdminBookingListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        title: Text("Bookings"),
-      ),
       body: Obx(
         () => _adminBookingController.isLoading.value
             ? const Loader()

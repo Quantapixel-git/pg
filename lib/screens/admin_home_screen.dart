@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/drawer_controller.dart';
 import 'package:pg/controllers/floor_controller.dart';
 import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/controllers/room_controller.dart';
@@ -17,6 +18,8 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
+  final _drawerNavigationController = Get.put(DrawerNavigationController());
+
   @override
   void initState() {
     // TODO: implement initState
@@ -28,20 +31,32 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() {
+      final selectedIndex = _drawerNavigationController.selectedIndex.value;
+      final currentNavigationItem =
+          _drawerNavigationController.navigationItems[selectedIndex];
+
+      return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.white,
-          title: Text("Admin"),
+          title: Text(
+            _drawerNavigationController.navigationItems[selectedIndex].title,
+          ),
           actions: [
-            IconButton(
-              onPressed: () {
-                Get.offAllNamed(RouteName.userLayout);
-              },
-              icon: Icon(
-                Icons.logout_outlined,
+            if (currentNavigationItem.insertRouteName != null)
+              TextButton(
+                onPressed: () {
+                  Get.toNamed(currentNavigationItem.insertRouteName!);
+                },
+                child: Text(
+                  "Add",
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            )
           ],
         ),
         drawer: Drawer(
@@ -81,67 +96,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
               ),
               DrawerItems(
-                onChanged: (index) {},
-                currentIndex: 0,
+                onChanged: (index) {
+                  Navigator.pop(context);
+                  _drawerNavigationController.selectedIndex(index);
+                },
+                currentIndex: _drawerNavigationController.selectedIndex.value,
               ),
             ],
           ),
         ),
-        body: GridView(
-          padding: const EdgeInsets.all(16.0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
-          children: [
-            AdminHomeCard(
-              icon: FontAwesomeIcons.building,
-              text: "PG's",
-              onTap: () {
-                Get.toNamed(RouteName.adminPGList);
-              },
-            ),
-            AdminHomeCard(
-              icon: FontAwesomeIcons.box,
-              text: "Floors",
-              onTap: () {
-                Get.toNamed(RouteName.adminFloorList);
-              },
-            ),
-            AdminHomeCard(
-              icon: FontAwesomeIcons.restroom,
-              text: "Rooms",
-              onTap: () {
-                Get.toNamed(RouteName.adminRoomList);
-              },
-            ),
-            AdminHomeCard(
-              icon: FontAwesomeIcons.user,
-              text: "Users",
-              onTap: () {
-                Get.toNamed(RouteName.adminUsersList);
-              },
-            ),
-            AdminHomeCard(
-              icon: FontAwesomeIcons.image,
-              text: "Banners",
-              onTap: () {
-                Get.toNamed(RouteName.adminBannerList);
-              },
-            ),
-            AdminHomeCard(
-              icon: Icons.admin_panel_settings_outlined,
-              text: "Sub Admin",
-              onTap: () {
-                Get.toNamed(RouteName.adminSubAdminList);
-              },
-            ),
-            AdminHomeCard(
-              icon: Icons.book,
-              text: "Bookings",
-              onTap: () {
-                Get.toNamed(RouteName.adminBookingList);
-              },
-            ),
-          ],
-        ));
+        body: _drawerNavigationController.navigationItems
+            .elementAt(
+              _drawerNavigationController.selectedIndex.value,
+            )
+            .widget,
+      );
+    });
   }
 }

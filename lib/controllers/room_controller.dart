@@ -23,7 +23,7 @@ class RoomController extends GetxController {
   @override
   void onReady() {
     // TODO: implement onReady
-    getallRooms();
+    // getallRooms();
     super.onReady();
   }
 

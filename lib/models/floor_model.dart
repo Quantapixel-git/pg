@@ -12,6 +12,7 @@ class FloorModel {
   });
 
   factory FloorModel.fromJson(Map<String, dynamic> json) {
+    print(json);
     return FloorModel(
       id: json['id'],
       categoryId: json['category_id'],
