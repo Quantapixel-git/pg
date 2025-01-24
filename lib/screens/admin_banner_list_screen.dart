@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/controllers/banner_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
 import 'package:pg/core/theme/app_colors.dart';
@@ -9,6 +10,7 @@ class AdminBannerListScreen extends StatelessWidget {
   AdminBannerListScreen({super.key});
 
   final _bannerController = Get.find<BannerController>();
+  final _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,32 +46,54 @@ class AdminBannerListScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                _bannerController.deleteBanner(
-                                    bannerId: banner.id);
-                              },
-                              icon: Icon(
-                                Icons.delete,
-                                color: AppColors.danger,
+                        if (_authController.adminUser.value?.role == "admin")
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: Text("Delete"),
+                                      content: Text(
+                                          "Are you sure you want to delete this banner"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          child: Text("No"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            _bannerController.deleteBanner(
+                                                bannerId: banner.id);
+                                            Get.back();
+                                          },
+                                          child: Text("Yes"),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: AppColors.danger,
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                Get.toNamed(
-                                  RouteName.adminUpdateBanner,
-                                  arguments: banner,
-                                );
-                              },
-                              icon: Icon(
-                                Icons.edit,
-                                color: AppColors.black,
-                              ),
-                            )
-                          ],
-                        ),
+                              IconButton(
+                                onPressed: () {
+                                  Get.toNamed(
+                                    RouteName.adminUpdateBanner,
+                                    arguments: banner,
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: AppColors.black,
+                                ),
+                              )
+                            ],
+                          ),
                       ],
                     ),
                   );

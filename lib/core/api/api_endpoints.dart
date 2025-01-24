@@ -29,6 +29,7 @@ class ApiEndpoints {
   // Users Endpoint
   static final String getAllUsers = "/getAllActiveUsers";
   static final String getUserById = "/getUserById";
+  static final String filterUser = "/getUsersByCategory";
   static final String inserUser = "/storeUsers";
   static final String deleteUser = "/deleteUser";
   static final String updateUser = "/updateUser";
@@ -53,4 +54,8 @@ class ApiEndpoints {
       "/getFloorsWithRoomsAndLeftoverSeats";
   static final String bookPG = "/storeBooking";
   static final String getAllBookings = "/getAllBookings";
+
+  // Authentication Routes
+  static final String adminLogin = "/adminLogin";
+  static final String userLogin = "/userLogin";
 }

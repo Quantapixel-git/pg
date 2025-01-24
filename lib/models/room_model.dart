@@ -22,7 +22,7 @@ class RoomModel {
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     return RoomModel(
       id: json['id'] as String,
-      pgId: json['categiry_id'] as String?,
+      pgId: json['categiry_id'] ?? json['category_details']['id'] as String,
       floorId: json['sub_category_id'] as String?,
       name: json['name'] as String,
       sharing: json['sharing'] as String,
@@ -44,6 +44,8 @@ class RoomModel {
     if (isUpdating) {
       data['inner_subcategory_id'] = id!;
     }
+
+    print(data);
 
     return data;
   }

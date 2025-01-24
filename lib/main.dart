@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/controllers/banner_controller.dart';
 import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         () {
           Get.put(BannerController());
           Get.put(PgController());
+          Get.put(AuthController());
         },
       ),
       debugShowCheckedModeBanner: false,

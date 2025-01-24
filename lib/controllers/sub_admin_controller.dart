@@ -90,7 +90,7 @@ class SubAdminController extends GetxController {
 
         getAllSubAdmins();
 
-        Get.until((route) => Get.currentRoute == RouteName.adminSubAdminList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isInserting.value = false;
@@ -153,7 +153,7 @@ class SubAdminController extends GetxController {
     );
     isUpdating.value = false;
     getAllSubAdmins();
-    Get.until((route) => Get.currentRoute == RouteName.adminSubAdminList);
+    Get.until((route) => Get.currentRoute == RouteName.adminHome);
   }
 
   void deleteSubAdmin({

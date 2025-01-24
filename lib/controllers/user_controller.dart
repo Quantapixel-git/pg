@@ -34,10 +34,12 @@ class UserController extends GetxController {
   final dateOfJoiningController = TextEditingController();
   final dateOfLeavingController = TextEditingController();
 
+  String? selectedPGIdForSearch;
+  String? selectedFloorIdForSearch;
+  String? selectedRoomIdForSearch;
+
   @override
   void onReady() {
-    // TODO: implement onReady
-    getAllUsers();
     super.onReady();
   }
 
@@ -50,6 +52,40 @@ class UserController extends GetxController {
 
     res.fold(
       (failure) {
+        AppUtils.showSnackBar(title: failure.title, message: failure.message);
+      },
+      (userData) {
+        userList.addAll(userData);
+      },
+    );
+    isLoading.value = false;
+  }
+
+  void getFilteredUsers() async {
+    if (selectedPGIdForSearch == null ||
+        selectedFloorIdForSearch == null ||
+        selectedRoomIdForSearch == null) {
+      return;
+    }
+
+    print("PG Id ...$selectedPGIdForSearch");
+    print("Floor Id ...$selectedFloorIdForSearch");
+    print("Room Id ...$selectedRoomIdForSearch");
+
+    isLoading.value = true;
+
+    userList.clear();
+
+    final res = await UserServices.getFilteredUsers(
+      pgId: selectedPGIdForSearch!,
+      floorId: selectedFloorIdForSearch!,
+      roomId: selectedRoomIdForSearch!,
+    );
+
+    res.fold(
+      (failure) {
+        print(failure.status);
+        print(failure.message);
         AppUtils.showSnackBar(title: failure.title, message: failure.message);
       },
       (userData) {
@@ -118,7 +154,7 @@ class UserController extends GetxController {
 
         getAllUsers();
 
-        Get.until((route) => Get.currentRoute == RouteName.adminUsersList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isInserting.value = false;
@@ -193,7 +229,7 @@ class UserController extends GetxController {
     );
     isUpdating.value = false;
     getAllUsers();
-    Get.until((route) => Get.currentRoute == RouteName.adminUsersList);
+    Get.until((route) => Get.currentRoute == RouteName.adminHome);
   }
 
   void deleteUser({
@@ -222,7 +258,7 @@ class UserController extends GetxController {
           backgroundColor: Colors.green,
         );
 
-        getAllUsers();
+        getFilteredUsers();
       },
     );
   }

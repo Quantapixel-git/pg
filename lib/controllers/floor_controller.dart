@@ -8,8 +8,8 @@ import 'package:pg/services/floor_services.dart';
 class FloorController extends GetxController {
   // States
   final isLoading = false.obs;
-  final floorList = <FloorModel>[].obs;
-  final dropdownFloorList = <FloorModel>[].obs;
+  final floorList = RxList<FloorModel>();
+  final dropdownFloorList = RxList<FloorModel>([]);
   final isInserting = false.obs;
   final isUpdating = false.obs;
 
@@ -56,14 +56,13 @@ class FloorController extends GetxController {
       },
       (floorData) {
         floorList.addAll(floorData);
-        floorList.refresh();
       },
     );
     isLoading.value = false;
   }
 
-  void getALlFloorDropdownByPGId() async {
-    if (selectedPGIdForSearch == null) {
+  void getALlFloorDropdownByPGId(String? pgId) async {
+    if (pgId == null) {
       AppUtils.showSnackBar(title: "Error", message: "Please seleect PG first");
       return;
     }
@@ -72,8 +71,7 @@ class FloorController extends GetxController {
 
     dropdownFloorList.clear();
 
-    final res =
-        await FloorServices.getAllFloorsByPGId(pgId: selectedPGIdForSearch!);
+    final res = await FloorServices.getAllFloorsByPGId(pgId: pgId!);
 
     res.fold(
       (failure) {
@@ -81,6 +79,7 @@ class FloorController extends GetxController {
       },
       (floorData) {
         dropdownFloorList.addAll(floorData);
+        floorList.refresh();
       },
     );
     isLoading.value = false;
@@ -115,7 +114,7 @@ class FloorController extends GetxController {
 
         getAllFloorsByPGId();
 
-        Get.until((route) => Get.currentRoute == RouteName.adminFloorList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isInserting.value = false;
@@ -154,10 +153,9 @@ class FloorController extends GetxController {
           backgroundColor: Colors.green,
         );
 
-        if (selectedPGIdForSearch != null) {
-          getALlFloorDropdownByPGId();
-        }
-        Get.until((route) => Get.currentRoute == RouteName.adminFloorList);
+        getAllFloorsByPGId();
+
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isUpdating.value = false;
@@ -186,6 +184,7 @@ class FloorController extends GetxController {
         AppUtils.showSnackBar(
           title: "Success",
           message: "Floor Successfully Delete",
+          backgroundColor: Colors.green,
         );
 
         getAllFloorsByPGId();

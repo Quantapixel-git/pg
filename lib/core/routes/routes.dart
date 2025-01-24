@@ -16,6 +16,7 @@ import 'package:pg/screens/admin_edit_sub_admin_screen.dart';
 import 'package:pg/screens/admin_edit_user_screen.dart';
 import 'package:pg/screens/admin_floor_list_screen.dart';
 import 'package:pg/screens/admin_home_screen.dart';
+import 'package:pg/screens/admin_login_screen.dart';
 import 'package:pg/screens/admin_pg_list_screen.dart';
 import 'package:pg/screens/admin_room_list_screen.dart';
 import 'package:pg/screens/admin_subadmin_list_screen.dart';
@@ -122,6 +123,10 @@ class Routes {
     GetPage(
       name: RouteName.adminUpdateBanner,
       page: () => AdminEditBannerScreen(),
+    ),
+    GetPage(
+      name: RouteName.adminLogin,
+      page: () => AdminLoginScreen(),
     ),
   ];
 }

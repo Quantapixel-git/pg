@@ -46,10 +46,11 @@ class Request {
 
       return res.data;
     } on DioException catch (e) {
-      print(e);
+      print("Response is .....");
       print(e.response);
+
       throw ServerException(
-        status: e.response?.data['status'] ?? "Error",
+        status: e.response?.data['status'],
         statusCode: e.response?.statusCode ?? 500,
         message: e.response?.data['message'] ??
             (e.response as Map?)?['message'] ??

@@ -18,7 +18,7 @@ class PgServices {
 
       return right(pgList);
     } on ServerException catch (e) {
-      return left(Failure(title: e.status, message: e.message));
+      return left(Failure(status: e.status, message: e.message));
     } catch (e) {
       return left(Failure(title: "Error", message: "Something went wrong"));
     }
@@ -44,7 +44,7 @@ class PgServices {
 
       return right(null);
     } on ServerException catch (e) {
-      return left(Failure(title: e.status, message: e.message));
+      return left(Failure(status: e.status, message: e.message));
     } catch (e) {
       return left(Failure(title: "Error", message: "Something went wrong"));
     }
@@ -75,7 +75,7 @@ class PgServices {
 
       return right(null);
     } on ServerException catch (e) {
-      return left(Failure(title: e.status, message: e.message));
+      return left(Failure(status: e.status, message: e.message));
     } catch (e) {
       return left(Failure(title: "Error", message: "Something went wrong"));
     }
@@ -94,7 +94,7 @@ class PgServices {
 
       return right(null);
     } on ServerException catch (e) {
-      return left(Failure(title: e.status, message: e.message));
+      return left(Failure(status: e.status, message: e.message));
     } catch (e) {
       return left(Failure(title: "Error", message: "Something went wrong"));
     }

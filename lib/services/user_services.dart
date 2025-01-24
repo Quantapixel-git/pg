@@ -25,6 +25,32 @@ class UserServices {
     }
   }
 
+  static Future<Either<Failure, List<UserModel>>> getFilteredUsers({
+    required String pgId,
+    required String floorId,
+    required String roomId,
+  }) async {
+    try {
+      final data = await Request.post(url: ApiEndpoints.filterUser, body: {
+        "category_id": pgId,
+        "sub_category_id": floorId,
+        "inner_sub_category_id": roomId
+      });
+
+      final userList = (data['data'] as List)
+          .map((floor) => UserModel.fromJson(floor))
+          .toList();
+
+      return right(userList);
+    } on ServerException catch (e) {
+      return left(
+          Failure(status: e.status, title: "Error", message: e.message));
+    } catch (e) {
+      print(e.toString());
+      return left(Failure(title: "Error", message: "Something went wrong"));
+    }
+  }
+
   static Future<Either<Failure, void>> insertUser({
     required UserModel user,
     required File? localAadharImage,

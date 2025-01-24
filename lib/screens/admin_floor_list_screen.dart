@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/controllers/floor_controller.dart';
 import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
-import 'package:pg/core/theme/app_colors.dart';
 import 'package:pg/widgets/admin_floor_card.dart';
+import 'package:pg/widgets/center_text.dart';
 import 'package:pg/widgets/dropdown_input.dart';
-import 'package:pg/widgets/loader.dart';
 
 class AdminFloorListScreen extends StatefulWidget {
   const AdminFloorListScreen({super.key});
@@ -18,36 +18,37 @@ class AdminFloorListScreen extends StatefulWidget {
 class _AdminFloorListScreenState extends State<AdminFloorListScreen> {
   final _pgController = Get.find<PgController>();
 
-  final _floorController = Get.find<FloorController>();
+  final _floorController = Get.put(FloorController());
+  final _authController = Get.find<AuthController>();
 
   @override
   void dispose() {
     // TODO: implement dispose
     _floorController.selectedPGIdForSearch = null;
-    _floorController.floorList.value.clear();
+    _floorController.floorList.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => _floorController.isLoading.value
-            ? const Loader()
-            : Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      DropdownInput(
-                        onSelected: (id) {
-                          _floorController.selectedPGIdForSearch = id;
-                          _floorController.getAllFloorsByPGId();
-                        },
-                        label: "Select PG",
-                        items: _pgController.pgList,
-                      ),
-                      ListView.builder(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              DropdownInput(
+                onSelected: (id) {
+                  _floorController.selectedPGIdForSearch = id;
+                  _floorController.getAllFloorsByPGId();
+                },
+                label: "Select PG",
+                items: _pgController.pgList,
+              ),
+              Obx(
+                () => _floorController.floorList.isEmpty
+                    ? CenterText(text: "No Floors Found")
+                    : ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: _floorController.floorList.length,
@@ -55,6 +56,7 @@ class _AdminFloorListScreenState extends State<AdminFloorListScreen> {
                           final floor = _floorController.floorList[index];
 
                           return AdminFloorCard(
+                            adminRole: _authController.adminUser.value?.role,
                             floor: floor,
                             onEditTap: (floor) {
                               Get.toNamed(RouteName.adminEditFloor,
@@ -75,9 +77,9 @@ class _AdminFloorListScreenState extends State<AdminFloorListScreen> {
                                     ),
                                     TextButton(
                                       onPressed: () {
+                                        Get.back();
                                         _floorController.deleteFloor(
                                             floorId: floorId);
-                                        Get.back();
                                       },
                                       child: Text("Yes"),
                                     )
@@ -88,10 +90,10 @@ class _AdminFloorListScreenState extends State<AdminFloorListScreen> {
                           );
                         },
                       ),
-                    ],
-                  ),
-                ),
               ),
+            ],
+          ),
+        ),
       ),
     );
   }

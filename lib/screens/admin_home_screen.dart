@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/controllers/drawer_controller.dart';
-import 'package:pg/controllers/floor_controller.dart';
-import 'package:pg/controllers/pg_controller.dart';
-import 'package:pg/controllers/room_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
 import 'package:pg/core/theme/app_colors.dart';
-import 'package:pg/widgets/admin_home_card.dart';
 import 'package:pg/widgets/drawer_items.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -20,13 +16,17 @@ class AdminHomeScreen extends StatefulWidget {
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final _drawerNavigationController = Get.put(DrawerNavigationController());
 
+  final _authController = Get.find<AuthController>();
+
   @override
-  void initState() {
-    // TODO: implement initState
-    Get.put(PgController());
-    Get.put(FloorController());
-    Get.put(RoomController());
-    super.initState();
+  void dispose() {
+    // TODO: implement dispose
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        _authController.adminUser.value = null;
+      },
+    );
+    super.dispose();
   }
 
   @override
@@ -44,7 +44,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             _drawerNavigationController.navigationItems[selectedIndex].title,
           ),
           actions: [
-            if (currentNavigationItem.insertRouteName != null)
+            if (currentNavigationItem.insertRouteName != null &&
+                (_authController.adminUser.value != null &&
+                    _authController.adminUser.value?.role != "sub-admin"))
               TextButton(
                 onPressed: () {
                   Get.toNamed(currentNavigationItem.insertRouteName!);
@@ -98,6 +100,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               DrawerItems(
                 onChanged: (index) {
                   Navigator.pop(context);
+
+                  if (index == 9) {
+                    Get.offAllNamed(RouteName.userLayout);
+                    return;
+                  }
                   _drawerNavigationController.selectedIndex(index);
                 },
                 currentIndex: _drawerNavigationController.selectedIndex.value,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/controllers/sub_admin_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
-import 'package:pg/core/theme/app_colors.dart';
 import 'package:pg/widgets/admin_sub_admin_card.dart';
 import 'package:pg/widgets/center_text.dart';
 import 'package:pg/widgets/loader.dart';
@@ -11,6 +11,7 @@ class AdminSubadminListScreen extends StatelessWidget {
   AdminSubadminListScreen({super.key});
 
   final _subAdminController = Get.put(SubAdminController());
+  final _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class AdminSubadminListScreen extends StatelessWidget {
                 _subAdminController.isLoading.value
                     ? const Loader()
                     : _subAdminController.subAdminList.isEmpty
-                        ? CenterText(text: "No Users Found")
+                        ? CenterText(text: "No Sub Admin Found")
                         : ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -34,6 +35,8 @@ class AdminSubadminListScreen extends StatelessWidget {
                                   _subAdminController.subAdminList[index];
 
                               return AdminSubAdminCard(
+                                adminRole:
+                                    _authController.adminUser.value?.role,
                                 onDeleteTap: (subAdminId) {
                                   Get.dialog(
                                     AlertDialog(

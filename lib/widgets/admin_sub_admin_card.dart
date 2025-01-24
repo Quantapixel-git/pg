@@ -5,6 +5,7 @@ import 'package:pg/models/sub_admin_model.dart';
 
 class AdminSubAdminCard extends StatelessWidget {
   final SubAdminModel subAdmin;
+  final String? adminRole;
 
   final Function(String? userId) onDeleteTap;
   final Function(SubAdminModel user) onEditTap;
@@ -14,6 +15,7 @@ class AdminSubAdminCard extends StatelessWidget {
     required this.subAdmin,
     required this.onDeleteTap,
     required this.onEditTap,
+    required this.adminRole,
   });
 
   @override
@@ -68,25 +70,26 @@ class AdminSubAdminCard extends StatelessWidget {
               ],
             ),
           ),
-          Wrap(
-            children: [
-              IconButton(
-                onPressed: () {
-                  onDeleteTap(subAdmin.id);
-                },
-                icon: Icon(
-                  Icons.delete,
-                  color: AppColors.danger,
+          if (adminRole == "admin")
+            Wrap(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    onDeleteTap(subAdmin.id);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: AppColors.danger,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  onEditTap(subAdmin);
-                },
-                icon: Icon(Icons.edit),
-              ),
-            ],
-          )
+                IconButton(
+                  onPressed: () {
+                    onEditTap(subAdmin);
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              ],
+            )
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:pg/controllers/user_booking_controller.dart';
 import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
 import 'package:pg/core/theme/app_colors.dart';
+import 'package:pg/widgets/center_text.dart';
 import 'package:pg/widgets/loader.dart';
 import 'package:pg/widgets/pg_card.dart';
 
@@ -23,7 +24,8 @@ class UserHomeScreen extends StatelessWidget {
         leading: IconButton(
           onPressed: () {},
           icon: Image.asset(
-            "assets/images/logo.png",
+            "assets/images/logo.jpeg",
+            width: 70,
           ),
         ),
         actions: [
@@ -86,79 +88,82 @@ class UserHomeScreen extends StatelessWidget {
                     ),
                     _pgController.isLoading.value
                         ? const Loader()
-                        : ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: _pgController.pgList.length,
-                            itemBuilder: (context, index) {
-                              final pg = _pgController.pgList[index];
+                        : _pgController.pgList.isEmpty
+                            ? CenterText(text: "No PG's Found")
+                            : ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: _pgController.pgList.length,
+                                itemBuilder: (context, index) {
+                                  final pg = _pgController.pgList[index];
 
-                              return PgCard(
-                                onTap: () {
-                                  print(pg.id);
-                                  _userBookingController.updatePGState(
-                                      pg.id, pg.name);
-                                  _userBookingController
-                                      .getMaxNumOfSharingDropdown();
+                                  return PgCard(
+                                    onTap: () {
+                                      print(pg.id);
+                                      _userBookingController.updatePGState(
+                                          pg.id, pg.name);
+                                      _userBookingController
+                                          .getMaxNumOfSharingDropdown();
 
-                                  Get.dialog(AlertDialog(
-                                    backgroundColor: AppColors.white,
-                                    title: Text("No of Sharings"),
-                                    content: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Obx(
-                                            () => DropdownMenu(
-                                              width: 250,
-                                              hintText: "select no of sharings",
-                                              onSelected: (value) {
-                                                _userBookingController
-                                                    .updateNoOfSharingState(
-                                                  value,
-                                                );
-                                              },
-                                              dropdownMenuEntries:
-                                                  _userBookingController
-                                                      .numberOfSharingDropdown
-                                                      .map(
-                                                        (item) =>
-                                                            DropdownMenuEntry(
-                                                          value: item,
-                                                          label:
-                                                              item.toString(),
-                                                        ),
-                                                      )
-                                                      .toList(),
+                                      Get.dialog(AlertDialog(
+                                        backgroundColor: AppColors.white,
+                                        title: Text("No of Sharings"),
+                                        content: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Obx(
+                                                () => DropdownMenu(
+                                                  width: 250,
+                                                  hintText:
+                                                      "select no of sharings",
+                                                  onSelected: (value) {
+                                                    _userBookingController
+                                                        .updateNoOfSharingState(
+                                                      value,
+                                                    );
+                                                  },
+                                                  dropdownMenuEntries:
+                                                      _userBookingController
+                                                          .numberOfSharingDropdown
+                                                          .map(
+                                                            (item) =>
+                                                                DropdownMenuEntry(
+                                                              value: item,
+                                                              label: item
+                                                                  .toString(),
+                                                            ),
+                                                          )
+                                                          .toList(),
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        child: Text("Cancel"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back();
-                                          Get.toNamed(
-                                            RouteName.userAvailableRooms,
-                                          );
-                                        },
-                                        child: Text("Continue"),
-                                      ),
-                                    ],
-                                  ));
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancel"),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                              Get.toNamed(
+                                                RouteName.userAvailableRooms,
+                                              );
+                                            },
+                                            child: Text("Continue"),
+                                          ),
+                                        ],
+                                      ));
+                                    },
+                                    imageUrl: pg.imageUrl,
+                                    name: pg.name,
+                                    address: pg.address,
+                                  );
                                 },
-                                imageUrl: pg.imageUrl,
-                                name: pg.name,
-                                address: pg.address,
-                              );
-                            },
-                          )
+                              )
                   ],
                 ),
               )

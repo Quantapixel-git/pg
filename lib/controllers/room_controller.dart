@@ -12,6 +12,7 @@ class RoomController extends GetxController {
   final isUpdating = false.obs;
 
   final roomList = RxList<RoomModel>([]);
+  final dropdownRoomList = RxList<RoomModel>([]);
 
   // Input
   String? selectedPGId;
@@ -19,6 +20,8 @@ class RoomController extends GetxController {
   final nameController = TextEditingController();
   final sharingController = TextEditingController();
   final priceController = TextEditingController();
+
+  String? selectedDropdownFloorId;
 
   @override
   void onReady() {
@@ -61,7 +64,7 @@ class RoomController extends GetxController {
     isInserting.value = true;
 
     final room = RoomModel(
-      pgId: selectedFloorId.toString(),
+      pgId: selectedPGId.toString(),
       floorId: selectedFloorId.toString(),
       name: nameController.text,
       sharing: sharingController.text.trim(),
@@ -83,16 +86,16 @@ class RoomController extends GetxController {
           backgroundColor: Colors.green,
         );
 
-        getallRooms();
+        roomList.clear();
 
-        Get.until((route) => Get.currentRoute == RouteName.adminRoomList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isInserting.value = false;
   }
 
-  void getAllRoomsByFloorId({required String? floorId}) async {
-    if (floorId == null) {
+  void getAllRoomsByFloorId() async {
+    if (selectedDropdownFloorId == null) {
       AppUtils.showSnackBar(title: "Error", message: "Please seleect PG first");
       return;
     }
@@ -101,14 +104,40 @@ class RoomController extends GetxController {
 
     roomList.clear();
 
-    final res = await RoomServices.getAllRoomsByFloorId(floorId: floorId);
+    final res = await RoomServices.getAllRoomsByFloorId(
+        floorId: selectedDropdownFloorId!);
 
     res.fold(
       (failure) {
+        print("Failure was calling during rooms");
         AppUtils.showSnackBar(title: failure.title, message: failure.message);
       },
       (roomData) {
         roomList.addAll(roomData);
+      },
+    );
+    isLoading.value = false;
+  }
+
+  void getAllRoomsDropdownByFloorId(String? floorId) async {
+    if (floorId == null) {
+      AppUtils.showSnackBar(title: "Error", message: "Please seleect PG first");
+      return;
+    }
+
+    isLoading.value = true;
+
+    dropdownRoomList.clear();
+
+    final res = await RoomServices.getAllRoomsByFloorId(floorId: floorId);
+
+    res.fold(
+      (failure) {
+        print("Failure was calling during rooms");
+        AppUtils.showSnackBar(title: failure.title, message: failure.message);
+      },
+      (roomData) {
+        dropdownRoomList.addAll(roomData);
       },
     );
     isLoading.value = false;
@@ -125,7 +154,7 @@ class RoomController extends GetxController {
 
     final room = RoomModel(
       id: roomId,
-      pgId: selectedFloorId.toString(),
+      pgId: selectedPGId.toString(),
       floorId: selectedFloorId.toString(),
       name: nameController.text,
       sharing: sharingController.text.trim(),
@@ -144,11 +173,12 @@ class RoomController extends GetxController {
           message: "Room Successfully Updated",
           backgroundColor: Colors.green,
         );
+
+        getAllRoomsByFloorId();
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isUpdating.value = false;
-    getallRooms();
-    Get.until((route) => Get.currentRoute == RouteName.adminRoomList);
   }
 
   void deleteRoom({
@@ -175,7 +205,7 @@ class RoomController extends GetxController {
           backgroundColor: Colors.green,
         );
 
-        getallRooms();
+        getAllRoomsByFloorId();
       },
     );
   }
@@ -190,7 +220,6 @@ class RoomController extends GetxController {
 
   void clearAllInputState() {
     selectedPGId = null;
-
     selectedFloorId = null;
     nameController.clear();
     sharingController.clear();

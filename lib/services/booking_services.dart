@@ -64,7 +64,8 @@ class BookingServices {
       return right(roomsWithFloor);
     } on ServerException catch (e) {
       print(e);
-      return left(Failure(title: e.status, message: e.message));
+      return left(
+          Failure(status: e.status, title: "Error", message: e.message));
     } catch (e) {
       print(e);
       return left(Failure(title: "Error", message: "Something went wrong"));
@@ -84,7 +85,8 @@ class BookingServices {
       return right(null);
     } on ServerException catch (e) {
       print(e);
-      return left(Failure(title: e.status, message: e.message));
+      return left(
+          Failure(status: e.status, title: "Error", message: e.message));
     } catch (e) {
       print(e);
       return left(Failure(title: "Error", message: "Something went wrong"));

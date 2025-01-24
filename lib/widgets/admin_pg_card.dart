@@ -6,12 +6,14 @@ class AdminPGCard extends StatelessWidget {
   final PGModel pg;
   final Function(String pgId) onDeleteTap;
   final Function(PGModel pg) onEditTap;
+  final String? adminRole;
 
   const AdminPGCard({
     super.key,
     required this.pg,
     required this.onDeleteTap,
     required this.onEditTap,
+    required this.adminRole,
   });
 
   @override
@@ -63,25 +65,26 @@ class AdminPGCard extends StatelessWidget {
               ],
             ),
           ),
-          Wrap(
-            children: [
-              IconButton(
-                onPressed: () {
-                  onDeleteTap(pg.id!);
-                },
-                icon: Icon(
-                  Icons.delete,
-                  color: AppColors.danger,
+          if (adminRole == "admin")
+            Wrap(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    onDeleteTap(pg.id!);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: AppColors.danger,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  onEditTap(pg);
-                },
-                icon: Icon(Icons.edit),
-              ),
-            ],
-          )
+                IconButton(
+                  onPressed: () {
+                    onEditTap(pg);
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              ],
+            )
         ],
       ),
     );

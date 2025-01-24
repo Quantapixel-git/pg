@@ -4,6 +4,7 @@ import 'package:pg/models/room_model.dart';
 
 class AdminRoomCard extends StatelessWidget {
   final RoomModel room;
+  final String? adminRole;
 
   final Function(String? roomId) onDeleteTap;
   final Function(RoomModel room) onEditTap;
@@ -13,6 +14,7 @@ class AdminRoomCard extends StatelessWidget {
     required this.room,
     required this.onDeleteTap,
     required this.onEditTap,
+    required this.adminRole,
   });
 
   @override
@@ -80,25 +82,26 @@ class AdminRoomCard extends StatelessWidget {
               ],
             ),
           ),
-          Wrap(
-            children: [
-              IconButton(
-                onPressed: () {
-                  onDeleteTap(room.id);
-                },
-                icon: Icon(
-                  Icons.delete,
-                  color: AppColors.danger,
+          if (adminRole == "admin")
+            Wrap(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    onDeleteTap(room.id);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: AppColors.danger,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  onEditTap(room);
-                },
-                icon: Icon(Icons.edit),
-              ),
-            ],
-          )
+                IconButton(
+                  onPressed: () {
+                    onEditTap(room);
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              ],
+            )
         ],
       ),
     );

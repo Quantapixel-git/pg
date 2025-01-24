@@ -24,6 +24,10 @@ class RouteName {
   static final String adminAddSubAdmin = "/admin/subAdmin/add";
   static final String adminUpdateSubAdmin = "/admin/subAdmin/update";
   static final String adminBookingList = "/admin/bookings/list";
+  static final String adminDashboard = "/admin/dashboard";
+  static final String adminSearchUser = "/admin/users/search";
+
+  static final String adminLogin = "/admin/login";
 
   // User Routes
   static final String userLayout = "/user/layout";

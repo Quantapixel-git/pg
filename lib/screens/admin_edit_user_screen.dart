@@ -134,7 +134,7 @@ class _AdminEditUserScreenState extends State<AdminEditUserScreen> {
                             imageSource: ImageSource.gallery);
                         _userController.selectedLocalAadharImage.value = image;
                       },
-                      imageUrl: user.aadhar,
+                      imageUrl: user.aadhar ?? "",
                       localImage:
                           _userController.selectedLocalAadharImage.value,
                     ),

@@ -72,7 +72,7 @@ class BannerController extends GetxController {
 
         getAllBanners();
 
-        Get.until((route) => Get.currentRoute == RouteName.adminBannerList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isInserting.value = false;
@@ -118,7 +118,7 @@ class BannerController extends GetxController {
         );
 
         getAllBanners();
-        Get.until((route) => Get.currentRoute == RouteName.adminBannerList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isUpdating.value = false;

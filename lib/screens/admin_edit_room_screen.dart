@@ -29,8 +29,8 @@ class _AdminEditRoomScreenState extends State<AdminEditRoomScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _roomController.initAllInputWithValue(room);
       _floorController.selectedPGIdForSearch = room.floorId;
-
-      _floorController.getALlFloorDropdownByPGId();
+      _floorController.selectedPGIdForSearch = room.pgId;
+      _floorController.getALlFloorDropdownByPGId(room.pgId);
     });
     super.initState();
   }
@@ -38,9 +38,11 @@ class _AdminEditRoomScreenState extends State<AdminEditRoomScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _roomController.clearAllInputState();
 
-    _floorController.dropdownFloorList.value.clear();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _roomController.clearAllInputState();
+      _floorController.dropdownFloorList.clear();
+    });
 
     super.dispose();
   }
@@ -64,8 +66,7 @@ class _AdminEditRoomScreenState extends State<AdminEditRoomScreen> {
                       DropdownInput(
                         onSelected: (id) {
                           _roomController.selectedPGId = id;
-                          _floorController.selectedPGIdForSearch = id;
-                          _floorController.getALlFloorDropdownByPGId();
+                          _floorController.getALlFloorDropdownByPGId(id);
                         },
                         hintText: room.pgName ?? "",
                         label: "Select PG",

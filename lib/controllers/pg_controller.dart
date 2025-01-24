@@ -88,7 +88,7 @@ class PgController extends GetxController {
           backgroundColor: Colors.green,
         );
         getAllPG();
-        Get.until((route) => Get.currentRoute == RouteName.adminPGList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isInserting.value = false;
@@ -120,7 +120,7 @@ class PgController extends GetxController {
           backgroundColor: Colors.green,
         );
         getAllPG();
-        Get.until((route) => Get.currentRoute == RouteName.adminPGList);
+        Get.until((route) => Get.currentRoute == RouteName.adminHome);
       },
     );
     isUpdating.value = false;
@@ -139,5 +139,13 @@ class PgController extends GetxController {
         getAllPG();
       },
     );
+
+    isLoading.value = false;
+  }
+
+  void clearInputs() {
+    selectedPGImage.value = null;
+    nameController.clear();
+    addressController.clear();
   }
 }

@@ -5,6 +5,7 @@ import 'package:pg/models/user_model.dart';
 
 class AdminUserCard extends StatelessWidget {
   final UserModel user;
+  final String? adminRole;
 
   final Function(String? userId) onDeleteTap;
   final Function(UserModel user) onEditTap;
@@ -14,6 +15,7 @@ class AdminUserCard extends StatelessWidget {
     required this.user,
     required this.onDeleteTap,
     required this.onEditTap,
+    required this.adminRole,
   });
 
   @override
@@ -48,14 +50,14 @@ class AdminUserCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "PG Name: ${user.pgId}",
+                  "PG Name: ${user.pgName}",
                   style: TextStyle(
                     fontSize: 17,
                     color: AppColors.gray,
                   ),
                 ),
                 Text(
-                  "Floor: ${user.floorId}",
+                  "Floor: ${user.floorName}",
                   style: TextStyle(
                     fontSize: 17,
                     color: AppColors.gray,
@@ -71,25 +73,26 @@ class AdminUserCard extends StatelessWidget {
               ],
             ),
           ),
-          Wrap(
-            children: [
-              IconButton(
-                onPressed: () {
-                  onDeleteTap(user.userId);
-                },
-                icon: Icon(
-                  Icons.delete,
-                  color: AppColors.danger,
+          if (adminRole == "admin")
+            Wrap(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    onDeleteTap(user.userId);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: AppColors.danger,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  onEditTap(user);
-                },
-                icon: Icon(Icons.edit),
-              ),
-            ],
-          )
+                IconButton(
+                  onPressed: () {
+                    onEditTap(user);
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              ],
+            )
         ],
       ),
     );

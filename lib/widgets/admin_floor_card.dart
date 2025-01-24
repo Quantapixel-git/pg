@@ -4,6 +4,7 @@ import 'package:pg/models/floor_model.dart';
 
 class AdminFloorCard extends StatelessWidget {
   final FloorModel floor;
+  final String? adminRole;
 
   final Function(String? floorId) onDeleteTap;
   final Function(FloorModel floor) onEditTap;
@@ -13,6 +14,7 @@ class AdminFloorCard extends StatelessWidget {
     required this.floor,
     required this.onDeleteTap,
     required this.onEditTap,
+    required this.adminRole,
   });
 
   @override
@@ -57,25 +59,26 @@ class AdminFloorCard extends StatelessWidget {
               ],
             ),
           ),
-          Wrap(
-            children: [
-              IconButton(
-                onPressed: () {
-                  onDeleteTap(floor.id);
-                },
-                icon: Icon(
-                  Icons.delete,
-                  color: AppColors.danger,
+          if (adminRole == "admin")
+            Wrap(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    onDeleteTap(floor.id);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: AppColors.danger,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  onEditTap(floor);
-                },
-                icon: Icon(Icons.edit),
-              ),
-            ],
-          )
+                IconButton(
+                  onPressed: () {
+                    onEditTap(floor);
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              ],
+            )
         ],
       ),
     );

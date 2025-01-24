@@ -55,27 +55,12 @@ class PgCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      address,
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: AppColors.gray,
-                      ),
-                    ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                        ),
-                        Text("4.2")
-                      ],
-                    )
-                  ],
+                Text(
+                  address,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: AppColors.gray,
+                  ),
                 ),
               ],
             ))

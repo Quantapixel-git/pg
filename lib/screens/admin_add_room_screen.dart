@@ -48,7 +48,7 @@ class _AdminAddRoomScreenState extends State<AdminAddRoomScreen> {
                       DropdownInput(
                         onSelected: (id) {
                           _roomController.selectedPGId = id;
-                          _floorController.getALlFloorDropdownByPGId();
+                          _floorController.getALlFloorDropdownByPGId(id);
                         },
                         label: "Select PG",
                         items: _pgController.pgList,

@@ -5,8 +5,12 @@ import 'package:dio/dio.dart';
 class UserModel {
   final String? userId;
   final String pgId;
+  final String? pgName;
+  final String? pgAddress;
   final String floorId;
+  final String? floorName;
   final String roomId;
+  final String? roomName;
   final String name;
   final String email;
   final String mobile;
@@ -21,8 +25,12 @@ class UserModel {
   UserModel({
     this.userId,
     required this.pgId,
+    this.pgName,
+    this.pgAddress,
     required this.floorId,
+    this.floorName,
     required this.roomId,
+    this.roomName,
     required this.name,
     required this.email,
     required this.mobile,
@@ -38,10 +46,14 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     print(json);
     return UserModel(
-      userId: json['user_id'],
+      userId: json['id'],
       pgId: json['category_id'],
+      pgName: json['category_name'],
+      pgAddress: json['category_address'],
       floorId: json['sub_category_id'],
+      floorName: json['subcategory_name'],
       roomId: json['inner_sub_category_id'],
+      roomName: json['innersubcategory_name'],
       name: json['name'],
       email: json['email'],
       mobile: json['mobile'],

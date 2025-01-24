@@ -49,7 +49,7 @@ class RoomServices {
     required RoomModel room,
   }) async {
     try {
-      final data = await Request.post(
+      await Request.post(
         url: ApiEndpoints.insertRoom,
         body: room.toJson(false),
       );

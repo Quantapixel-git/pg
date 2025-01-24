@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/controllers/floor_controller.dart';
 import 'package:pg/controllers/pg_controller.dart';
 import 'package:pg/controllers/room_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
-import 'package:pg/core/theme/app_colors.dart';
 import 'package:pg/widgets/admin_room_card.dart';
 import 'package:pg/widgets/center_text.dart';
 import 'package:pg/widgets/dropdown_input.dart';
 
 class AdminRoomListScreen extends StatefulWidget {
-  AdminRoomListScreen({super.key});
+  const AdminRoomListScreen({super.key});
 
   @override
   State<AdminRoomListScreen> createState() => _AdminRoomListScreenState();
 }
 
 class _AdminRoomListScreenState extends State<AdminRoomListScreen> {
+  final _authController = Get.find<AuthController>();
   final _pgController = Get.find<PgController>();
 
   final _floorController = Get.find<FloorController>();
 
-  final _roomController = Get.find<RoomController>();
+  final _roomController = Get.put(RoomController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _roomController.roomList.clear();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -44,18 +52,19 @@ class _AdminRoomListScreenState extends State<AdminRoomListScreen> {
                 DropdownInput(
                   onSelected: (id) {
                     _floorController.selectedPGIdForSearch = id;
-                    _floorController.getALlFloorDropdownByPGId();
+                    _floorController.selectedPGIdForSearch = id;
+                    _floorController.getAllFloorsByPGId();
                   },
                   label: "Select PG",
                   items: _pgController.pgList,
                 ),
                 DropdownInput(
                   onSelected: (id) {
-                    print("Floor id is ...$id");
-                    _roomController.getAllRoomsByFloorId(floorId: id);
+                    _roomController.selectedDropdownFloorId = id;
+                    _roomController.getAllRoomsByFloorId();
                   },
                   label: "Select Floor",
-                  items: _floorController.dropdownFloorList.value,
+                  items: _floorController.floorList,
                 ),
                 _roomController.roomList.isEmpty
                     ? CenterText(text: "No Romms Found")
@@ -64,8 +73,12 @@ class _AdminRoomListScreenState extends State<AdminRoomListScreen> {
                         shrinkWrap: true,
                         itemCount: _roomController.roomList.length,
                         itemBuilder: (context, index) {
-                          final room = _roomController.roomList[index];
+                          final room = _roomController.roomList.value[index];
+
+                          print("Pg id fomr floor list is ......${room.pgId}");
+
                           return AdminRoomCard(
+                            adminRole: _authController.adminUser.value?.role,
                             room: room,
                             onDeleteTap: (roomId) {
                               Get.dialog(

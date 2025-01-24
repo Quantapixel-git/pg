@@ -22,7 +22,8 @@ class _AdminAddPgScreenState extends State<AdminAddPgScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _pgController.updateImageState(null);
+    _pgController.clearInputs();
+
     super.dispose();
   }
 

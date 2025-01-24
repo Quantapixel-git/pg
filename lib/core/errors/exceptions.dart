@@ -12,13 +12,13 @@ class LocalStorageException implements Exception {
 
 class ServerException implements Exception {
   final int statusCode;
-  final String status;
+  final int status;
   final String message;
   final Map<String, dynamic>? data;
 
   ServerException({
     this.statusCode = 500,
-    this.status = "Error",
+    this.status = 0,
     this.message = "Something went wrong",
     this.data = const {},
   });

@@ -69,6 +69,7 @@ class _AdminAddUserScreenState extends State<AdminAddUserScreen> {
                     DropdownInput(
                       onSelected: (id) {
                         _userController.selectedPGId = id;
+                        _floorController.getALlFloorDropdownByPGId(id);
                       },
                       label: "Select PG",
                       items: _pgController.pgList,
@@ -76,16 +77,18 @@ class _AdminAddUserScreenState extends State<AdminAddUserScreen> {
                     DropdownInput(
                       onSelected: (id) {
                         _userController.selectedFloorId = id;
+                        _roomController.selectedDropdownFloorId = id;
+                        _roomController.getAllRoomsByFloorId();
                       },
                       label: "Select Floor",
-                      items: _floorController.floorList,
+                      items: _floorController.dropdownFloorList.value,
                     ),
                     DropdownInput(
                       onSelected: (id) {
                         _userController.selectedRoomId = id;
                       },
                       label: "Select Room",
-                      items: _roomController.roomList,
+                      items: _roomController.roomList.value,
                     ),
                     Input(
                       controller: _userController.nameController,
