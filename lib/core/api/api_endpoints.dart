@@ -33,6 +33,7 @@ class ApiEndpoints {
   static final String inserUser = "/storeUsers";
   static final String deleteUser = "/deleteUser";
   static final String updateUser = "/updateUser";
+  static final String searchUsers = "/searchUsers";
 
   // Bnnaers Enpoint
   static final String getAllBanners = "/getAllBanners";

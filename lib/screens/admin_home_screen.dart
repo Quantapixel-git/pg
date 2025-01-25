@@ -101,7 +101,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 onChanged: (index) {
                   Navigator.pop(context);
 
-                  if (index == 9) {
+                  if (index == 10) {
                     Get.offAllNamed(RouteName.userLayout);
                     return;
                   }

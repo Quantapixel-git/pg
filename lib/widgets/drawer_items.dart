@@ -97,14 +97,24 @@ class DrawerItems extends StatelessWidget {
             onChanged(8);
           },
         ),
-        Divider(),
         ListTile(
           tileColor:
               currentIndex == 9 ? AppColors.black.withValues(alpha: 0.2) : null,
+          leading: Icon(Icons.pending),
+          title: const Text('Pending Pending Dues'),
+          onTap: () {
+            onChanged(9);
+          },
+        ),
+        Divider(),
+        ListTile(
+          tileColor: currentIndex == 10
+              ? AppColors.black.withValues(alpha: 0.2)
+              : null,
           leading: Icon(Icons.logout),
           title: const Text("Logout"),
           onTap: () {
-            onChanged(9);
+            onChanged(10);
           },
         ),
       ],

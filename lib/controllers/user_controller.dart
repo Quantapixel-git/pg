@@ -12,6 +12,7 @@ class UserController extends GetxController {
   // States
   final isLoading = false.obs;
   final userList = RxList<UserModel>([]);
+  final searchUserList = RxList<UserModel>([]);
   final isInserting = false.obs;
   final isUpdating = false.obs;
 
@@ -41,6 +42,24 @@ class UserController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+  }
+
+  void searchUsers(String searchTerm) async {
+    isLoading.value = true;
+
+    searchUserList.clear();
+
+    final res = await UserServices.searchUser(searchTerm: searchTerm);
+
+    res.fold(
+      (failure) {
+        AppUtils.showSnackBar(title: failure.title, message: failure.message);
+      },
+      (userData) {
+        searchUserList.addAll(userData);
+      },
+    );
+    isLoading.value = false;
   }
 
   void getAllUsers() async {

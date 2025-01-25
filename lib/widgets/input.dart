@@ -10,6 +10,7 @@ class Input extends StatelessWidget {
   final bool showLabel;
   final TextInputType keyboardType;
   final bool isSecureEntry;
+  final Icon? prefixIcon;
 
   const Input({
     super.key,
@@ -21,6 +22,7 @@ class Input extends StatelessWidget {
     this.showLabel = true,
     this.keyboardType = TextInputType.text,
     this.isSecureEntry = false,
+    this.prefixIcon,
   });
 
   @override
@@ -50,6 +52,7 @@ class Input extends StatelessWidget {
           readOnly: readOnly,
           controller: controller,
           decoration: InputDecoration(
+            prefixIcon: prefixIcon,
             filled: true,
             fillColor: enabled
                 ? Colors.transparent

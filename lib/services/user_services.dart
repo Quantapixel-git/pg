@@ -8,6 +8,27 @@ import 'package:pg/core/errors/failure.dart';
 import 'package:pg/models/user_model.dart';
 
 class UserServices {
+  static Future<Either<Failure, List<UserModel>>> searchUser({
+    required String searchTerm,
+  }) async {
+    try {
+      final data = await Request.post(url: ApiEndpoints.searchUsers, body: {
+        "search": searchTerm,
+      });
+
+      final userList = (data['data'] as List)
+          .map((floor) => UserModel.fromJson(floor))
+          .toList();
+
+      return right(userList);
+    } on ServerException catch (e) {
+      return left(Failure(title: "Error", message: e.message));
+    } catch (e) {
+      print(e.toString());
+      return left(Failure(title: "Error", message: "Something went wrong"));
+    }
+  }
+
   static Future<Either<Failure, List<UserModel>>> getAllUsers() async {
     try {
       final data = await Request.get(url: ApiEndpoints.getAllUsers);

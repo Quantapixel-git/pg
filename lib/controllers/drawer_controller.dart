@@ -5,6 +5,7 @@ import 'package:pg/screens/admin_banner_list_screen.dart';
 import 'package:pg/screens/admin_booking_list_screen.dart';
 import 'package:pg/screens/admin_dashboard_screen.dart';
 import 'package:pg/screens/admin_floor_list_screen.dart';
+import 'package:pg/screens/admin_pending_dues_screen.dart';
 import 'package:pg/screens/admin_pg_list_screen.dart';
 import 'package:pg/screens/admin_room_list_screen.dart';
 import 'package:pg/screens/admin_search_user.dart';
@@ -71,6 +72,11 @@ class DrawerNavigationController extends GetxController {
       title: "Ssearch User",
       insertRouteName: null,
       widget: AdminSearchUser(),
+    ),
+    NavigationItem(
+      title: "Pending Dues",
+      insertRouteName: null,
+      widget: AdminPendingDuesScreen(),
     ),
   ];
 

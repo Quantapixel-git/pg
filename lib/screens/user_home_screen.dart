@@ -21,12 +21,9 @@ class UserHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: Image.asset(
-            "assets/images/logo.jpeg",
-            width: 70,
-          ),
+        leading: Image.asset(
+          "assets/images/logo.jpeg",
+          width: 100,
         ),
         actions: [
           IconButton(
