@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
 import 'package:pg/core/theme/app_colors.dart';
 import 'package:pg/widgets/button.dart';
 import 'package:pg/widgets/input.dart';
 
 class UserLoginScreen extends StatelessWidget {
-  const UserLoginScreen({super.key});
+  UserLoginScreen({super.key});
+
+  final _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +42,11 @@ class UserLoginScreen extends StatelessWidget {
             height: 20,
           ),
           Input(
-            label: "Email",
+            controller: _authController.mobileController,
+            label: "Phone Number",
           ),
           Input(
+            controller: _authController.passwordController,
             label: "Password",
           ),
           SizedBox(
@@ -49,9 +54,7 @@ class UserLoginScreen extends StatelessWidget {
           ),
           Button(
             text: "Log In",
-            onTap: () {
-              Get.offAllNamed(RouteName.adminHome);
-            },
+            onTap: _authController.userLogin,
             hasFullWidth: true,
           ),
           SizedBox(

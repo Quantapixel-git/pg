@@ -14,6 +14,7 @@ class UserBookingController extends GetxController {
 
   String? selectedPGId;
   String? selectedPGName;
+  String? selectedPGImageUrl;
   int selectedNoOfSharing = 0;
   String? selectedFloorId;
   String? selectedFloorName;
@@ -50,8 +51,10 @@ class UserBookingController extends GetxController {
         return;
       },
       (sharing) {
-        for (int i = 1; i <= int.parse(sharing); i++) {
-          numberOfSharingDropdown.add(i);
+        if (sharing != null) {
+          for (int i = 1; i <= int.parse(sharing); i++) {
+            numberOfSharingDropdown.add(i);
+          }
         }
       },
     );

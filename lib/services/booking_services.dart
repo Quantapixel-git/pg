@@ -26,7 +26,7 @@ class BookingServices {
     }
   }
 
-  static Future<Either<Failure, String>> getMaxNumberOfSharing({
+  static Future<Either<Failure, String?>> getMaxNumberOfSharing({
     required String pgId,
   }) async {
     try {
@@ -35,11 +35,12 @@ class BookingServices {
         body: {"category_id": pgId},
       );
 
-      final sharing = data['data']['max_sharing_value'] as String;
+      final sharing = data['data']['max_sharing_value'] as String?;
 
       return right(sharing);
     } on ServerException catch (e) {
-      return left(Failure(title: "Error", message: e.message));
+      return left(
+          Failure(status: e.status, title: "Error", message: e.message));
     } catch (e) {
       return left(Failure(title: "Error", message: "Something went wrong"));
     }

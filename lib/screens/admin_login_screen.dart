@@ -65,7 +65,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
               ),
               Input(
                 controller: _authController.mobileController,
-                label: "Email",
+                label: "Phone Number",
               ),
               Input(
                 controller: _authController.passwordController,

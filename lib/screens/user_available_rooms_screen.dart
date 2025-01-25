@@ -30,7 +30,7 @@ class _UserAvailableRoomsScreenState extends State<UserAvailableRoomsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PG Only for Girls in New Delhi"),
+        title: Text(_userBookingControoler.selectedPGName ?? "Available Rooms"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,7 +43,8 @@ class _UserAvailableRoomsScreenState extends State<UserAvailableRoomsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
                   child: Image.network(
-                    "https://plus.unsplash.com/premium_photo-1661964402307-02267d1423f5?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    _userBookingControoler.selectedPGImageUrl ??
+                        "https://plus.unsplash.com/premium_photo-1661964402307-02267d1423f5?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     fit: BoxFit.cover,
                   ),
                 ),

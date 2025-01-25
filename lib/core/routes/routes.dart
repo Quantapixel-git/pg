@@ -25,6 +25,7 @@ import 'package:pg/screens/book_room_screen.dart';
 import 'package:pg/screens/home_screen.dart';
 import 'package:pg/screens/navigation_layout.dart';
 import 'package:pg/screens/user_available_rooms_screen.dart';
+import 'package:pg/screens/user_details_screen.dart';
 
 class Routes {
   static final pages = [
@@ -127,6 +128,10 @@ class Routes {
     GetPage(
       name: RouteName.adminLogin,
       page: () => AdminLoginScreen(),
+    ),
+    GetPage(
+      name: RouteName.userDetails,
+      page: () => UserDetailsScreen(),
     ),
   ];
 }

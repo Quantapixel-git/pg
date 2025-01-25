@@ -101,7 +101,7 @@ class DrawerItems extends StatelessWidget {
           tileColor:
               currentIndex == 9 ? AppColors.black.withValues(alpha: 0.2) : null,
           leading: Icon(Icons.pending),
-          title: const Text('Pending Pending Dues'),
+          title: const Text('Pending Dues'),
           onTap: () {
             onChanged(9);
           },
@@ -111,10 +111,21 @@ class DrawerItems extends StatelessWidget {
           tileColor: currentIndex == 10
               ? AppColors.black.withValues(alpha: 0.2)
               : null,
+          leading: Icon(Icons.download),
+          title: const Text("Download Data"),
+          onTap: () {
+            onChanged(10);
+          },
+        ),
+        Divider(),
+        ListTile(
+          tileColor: currentIndex == 11
+              ? AppColors.black.withValues(alpha: 0.2)
+              : null,
           leading: Icon(Icons.logout),
           title: const Text("Logout"),
           onTap: () {
-            onChanged(10);
+            onChanged(11);
           },
         ),
       ],

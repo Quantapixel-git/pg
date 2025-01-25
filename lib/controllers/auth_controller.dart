@@ -43,4 +43,33 @@ class AuthController extends GetxController {
     );
     isLoading.value = false;
   }
+
+  void userLogin() async {
+    if (mobileController.text.isEmpty || passwordController.text.isEmpty) {
+      AppUtils.showSnackBar(
+        title: "Error ",
+        message: "All Fields are required",
+      );
+      return;
+    }
+
+    isLoading.value = true;
+
+    final res = await AuthServices.userLogin(
+      mobile: mobileController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+
+    res.fold(
+      (failure) {
+        AppUtils.showSnackBar(title: "Error", message: failure.message);
+      },
+      (userData) {
+        user.value = userData;
+
+        Get.offAllNamed(RouteName.userDetails);
+      },
+    );
+    isLoading.value = false;
+  }
 }

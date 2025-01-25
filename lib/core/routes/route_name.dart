@@ -28,6 +28,7 @@ class RouteName {
   static final String adminSearchUser = "/admin/users/search";
 
   static final String adminLogin = "/admin/login";
+  static final String userDetails = "/user/details";
 
   // User Routes
   static final String userLayout = "/user/layout";

@@ -101,8 +101,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 onChanged: (index) {
                   Navigator.pop(context);
 
-                  if (index == 10) {
+                  if (index == 11) {
                     Get.offAllNamed(RouteName.userLayout);
+                    return;
+                  }
+
+                  if (index == 10) {
                     return;
                   }
                   _drawerNavigationController.selectedIndex(index);
