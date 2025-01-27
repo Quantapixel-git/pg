@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pg/controllers/auth_controller.dart';
 import 'package:pg/core/routes/route_name.dart';
 import 'package:pg/core/theme/app_colors.dart';
+import 'package:pg/widgets/transaction_card.dart';
 import 'package:pg/widgets/user_detail_card.dart';
 
 class UserDetailsScreen extends StatelessWidget {
@@ -52,14 +53,13 @@ class UserDetailsScreen extends StatelessWidget {
                 user: _authController.user.value!,
               ),
             ),
-            Container(
-                padding: const EdgeInsets.all(16.0),
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Container();
-                  },
-                )),
+            ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: 15,
+              itemBuilder: (context, index) {
+                return TransactionCard();
+              },
+            )
           ],
         ),
       ),

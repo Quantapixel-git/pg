@@ -106,9 +106,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     return;
                   }
 
-                  if (index == 10) {
-                    return;
-                  }
                   _drawerNavigationController.selectedIndex(index);
                 },
                 currentIndex: _drawerNavigationController.selectedIndex.value,

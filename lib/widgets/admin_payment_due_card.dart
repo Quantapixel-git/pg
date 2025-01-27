@@ -6,10 +6,12 @@ import 'package:pg/models/user_model.dart';
 
 class AdminPaymentDueCard extends StatelessWidget {
   final UserModel user;
+  final VoidCallback onUnpaidTap;
 
   const AdminPaymentDueCard({
     super.key,
     required this.user,
+    required this.onUnpaidTap,
   });
 
   @override
@@ -146,11 +148,14 @@ class AdminPaymentDueCard extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            "Unpaid",
-            style: TextStyle(
-              fontSize: 18,
-              color: AppColors.primary,
+          GestureDetector(
+            onTap: onUnpaidTap,
+            child: Text(
+              "Unpaid",
+              style: TextStyle(
+                fontSize: 18,
+                color: AppColors.primary,
+              ),
             ),
           ),
         ],

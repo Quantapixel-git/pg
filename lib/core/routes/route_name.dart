@@ -26,6 +26,7 @@ class RouteName {
   static final String adminBookingList = "/admin/bookings/list";
   static final String adminDashboard = "/admin/dashboard";
   static final String adminSearchUser = "/admin/users/search";
+  static final String adminDownloadData = "/admin/download/data";
 
   static final String adminLogin = "/admin/login";
   static final String userDetails = "/user/details";
